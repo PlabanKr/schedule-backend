@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 
@@ -19,6 +20,7 @@ db.once("open", () => console.log("Database connected!"));
 
 // middlewares
 app.use(bodyParser.json());
+app.use(cors());
 
 // All the routes
 
