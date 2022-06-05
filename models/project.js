@@ -21,3 +21,5 @@ const ProjectSchema = new Schema({
     default: Date.now,
   },
 });
+
+module.exports = mongoose.model("Project", ProjectSchema);
