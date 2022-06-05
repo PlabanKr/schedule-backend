@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -15,6 +16,9 @@ mongoose.connect(DB_URL).catch((error) => {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => console.log("Database connected!"));
+
+// middlewares
+app.use(bodyParser.json());
 
 // All the routes
 
