@@ -25,8 +25,10 @@ app.use(cors());
 // All the routes
 
 const tasksRoutes = require("./routes/task");
+const projectsRoutes = require("./routes/project");
 
 app.use("/tasks", tasksRoutes);
+app.use("/projects", projectsRoutes);
 
 const PORT = process.env.PORT ? process.env.PORT : 5300;
 app.listen(PORT, () => {
