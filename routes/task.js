@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// TODO: destructure req.body.task and then pass the values
 router.post("/create", async (req, res) => {
   try {
     const task = new Task(req.body.task);
