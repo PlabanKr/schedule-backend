@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Task = require("../models/task");
+const { isLoggedIn } = require("../middleware/auth");
 
-router.get("/", async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
   try {
     const tasks = await Task.find({});
     res.json(tasks);
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // TODO: destructure req.body.task and then pass the values
-router.post("/create", async (req, res) => {
+router.post("/create", isLoggedIn, async (req, res) => {
   try {
     const task = new Task(req.body.task);
     await task.save();
@@ -26,7 +27,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.get("/get/:id", async (req, res) => {
+router.get("/get/:id", isLoggedIn, async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     res.json(task);
@@ -37,7 +38,7 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-router.put("/edit/:id", async (req, res) => {
+router.put("/edit/:id", isLoggedIn, async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, { ...req.body.task });
     res.json(task);
@@ -48,7 +49,7 @@ router.put("/edit/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", isLoggedIn, async (req, res) => {
   try {
     await Task.findByIdAndDelete(req.params.id);
     res.json({ msg: "task deleted successfully" });

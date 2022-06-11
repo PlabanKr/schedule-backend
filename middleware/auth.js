@@ -1,4 +1,4 @@
-const isLoggedIn = (req, res, next) => {
+exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated) {
     res.status(401).json({
       msg: "Login to access this route",
@@ -6,5 +6,3 @@ const isLoggedIn = (req, res, next) => {
   }
   next();
 };
-
-module.exports = isLoggedIn;

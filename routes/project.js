@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
+const { isLoggedIn } = require("../middleware/auth");
 
-router.get("/", async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
   try {
     const projects = await Project.find({});
     res.json(projects);
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // TODO: destructure req.body.project and then pass the values
-router.post("/create", async (req, res) => {
+router.post("/create", isLoggedIn, async (req, res) => {
   try {
     const project = new Project(req.body.project);
     await project.save();
@@ -26,7 +27,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.get("/get/:id", async (req, res) => {
+router.get("/get/:id", isLoggedIn, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     res.json(project);
@@ -37,7 +38,7 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-router.put("/edit/:id", async (req, res) => {
+router.put("/edit/:id", isLoggedIn, async (req, res) => {
   try {
     const project = await Project.findByIdAndUpdate(req.params.id, {
       ...req.body.project,
@@ -50,7 +51,7 @@ router.put("/edit/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", isLoggedIn, async (req, res) => {
   try {
     await Project.findByIdAndDelete(req.params.id);
     res.json({ msg: "Project deleted successfully" });
